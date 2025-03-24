@@ -12,6 +12,7 @@ import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequestMapping("/villagers")
+@CrossOrigin
 public class VillagerController {
 
     private final VillagerService villagerService;

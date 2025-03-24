@@ -18,6 +18,7 @@ import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequestMapping("/auth")
+@CrossOrigin
 public class AuthController {
     private final UserService userService;
     private final JwtUtil jwtUtil;
@@ -42,13 +43,17 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Map<String, String>> login(@RequestBody LoginRequest loginRequest) throws ExecutionException, InterruptedException {
+    public ResponseEntity<Map<String, String>> login(@RequestBody LoginRequest loginRequest)
+            throws ExecutionException, InterruptedException {
+        System.out.println("Login attempt: " + loginRequest.getUsername());
         String authResponse = userService.authenticateUser(loginRequest.getUsername(), loginRequest.getPassword());
+        System.out.println("Auth response: " + authResponse);
 
         if (authResponse.startsWith("Authenticated")) {
             String token = jwtUtil.generateToken(loginRequest.getUsername());
             Map<String, String> response = new HashMap<>();
             response.put("token", token);
+            response.put("username", loginRequest.getUsername());
             response.put("role", authResponse.replace("Authenticated as: ", ""));
             return ResponseEntity.ok(response);
         }

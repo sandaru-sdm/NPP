@@ -41,24 +41,30 @@ public class UserService {
     }
 
     public String authenticateUser(String username, String password) throws ExecutionException, InterruptedException {
+        System.out.println("Authenticating user: " + username);
+
         DocumentReference docRef = firestore.collection("users").document(username);
         DocumentSnapshot document = docRef.get().get();
 
-        if (document.exists()) {
-            User user = document.toObject(User.class);
-
-            if (!user.getIsActive()) {
-                return "User is inactive!";
-            }
-
-            if (passwordEncoder.matches(password, user.getPassword())) {
-                return "Authenticated as: " + user.getRole();
-            } else {
-                return "Invalid password!";
-            }
+        if (!document.exists()) {
+            System.out.println("User not found in Firestore");
+            return "Invalid credentials!";
         }
-        return "Invalid credentials!";
+
+        User user = document.toObject(User.class);
+        System.out.println("User found: " + user.getUsername());
+
+        if (!user.getIsActive()) {
+            return "User is inactive!";
+        }
+
+        if (passwordEncoder.matches(password, user.getPassword())) {
+            return "Authenticated as: " + user.getRole();
+        }
+
+        return "Invalid password!";
     }
+
 
     public String updateUserRole(String adminUsername, String username, String newRole) throws ExecutionException, InterruptedException {
         DocumentReference adminRef = firestore.collection("users").document(adminUsername);
@@ -119,9 +125,9 @@ public class UserService {
             );
 
             firestore.collection("users").document("maduhansadilshan@gmail.com").set(adminUser).get();
-            System.out.println("✅ Default Admin Created: Username: maduhansadilshan@gmail.com, Password: dilshan2000");
+            System.out.println("Default Admin Created: Username: maduhansadilshan@gmail.com, Password: dilshan2000");
         } else {
-            System.out.println("✅ Admin already exists, skipping creation.");
+            System.out.println("Admin already exists, skipping creation.");
         }
     }
 }
