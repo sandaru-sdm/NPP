@@ -6,6 +6,7 @@ import com.sdm.NPP.model.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -130,4 +131,18 @@ public class UserService {
             System.out.println("Admin already exists, skipping creation.");
         }
     }
+
+    public List<User> getAllUsers() throws ExecutionException, InterruptedException {
+        CollectionReference usersCollection = firestore.collection("users");
+        ApiFuture<QuerySnapshot> future = usersCollection.get();
+        List<User> users = new ArrayList<>();
+
+        for (DocumentSnapshot document : future.get().getDocuments()) {
+            if (document.exists()) {
+                users.add(document.toObject(User.class));
+            }
+        }
+        return users;
+    }
+
 }
