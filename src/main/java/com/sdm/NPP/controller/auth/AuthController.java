@@ -19,7 +19,7 @@ import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 public class AuthController {
     private final UserService userService;
     private final JwtUtil jwtUtil;
