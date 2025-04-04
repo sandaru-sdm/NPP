@@ -73,4 +73,14 @@ public class VillagerController {
             return ResponseEntity.status(500).body(null);
         }
     }
+
+    @GetMapping("/count")
+    public ResponseEntity<Integer> getVillagersCount() {
+        try {
+            int count = villagerService.getVillagersCount();
+            return ResponseEntity.ok(count);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(null);
+        }
+    }
 }

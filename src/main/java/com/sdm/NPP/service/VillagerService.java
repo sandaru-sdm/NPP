@@ -89,4 +89,10 @@ public class VillagerService {
 
         return villagers;
     }
+
+    public int getVillagersCount() throws ExecutionException, InterruptedException {
+        CollectionReference villagersCollection = firestore.collection("villagers");
+        ApiFuture<QuerySnapshot> future = villagersCollection.get();
+        return future.get().size();
+    }
 }
