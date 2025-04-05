@@ -145,4 +145,9 @@ public class UserService {
         return users;
     }
 
+    public int getUsersCount() throws ExecutionException, InterruptedException{
+        CollectionReference usersCollection = firestore.collection("users");
+        ApiFuture<QuerySnapshot> future = usersCollection.get();
+        return future.get().size();
+    }
 }

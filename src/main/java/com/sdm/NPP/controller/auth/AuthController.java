@@ -109,4 +109,13 @@ public class AuthController {
         }
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<Integer> getUsersCount() {
+        try {
+            int count = userService.getUsersCount();
+            return ResponseEntity.ok(count);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(null);
+        }
+    }
 }
