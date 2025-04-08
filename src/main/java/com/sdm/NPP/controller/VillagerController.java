@@ -83,4 +83,15 @@ public class VillagerController {
             return ResponseEntity.status(500).body(null);
         }
     }
+
+    @GetMapping("/north")
+    public ResponseEntity<Integer> getNorthDivisionVillagersCount() {
+        try {
+            int count = villagerService.getNorthDivisionVillagersCount();
+            return ResponseEntity.ok(count);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(null);
+        }
+    }
+
 }

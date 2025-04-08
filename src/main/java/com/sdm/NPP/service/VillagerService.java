@@ -95,4 +95,16 @@ public class VillagerService {
         ApiFuture<QuerySnapshot> future = villagersCollection.get();
         return future.get().size();
     }
+
+    public int getNorthDivisionVillagersCount() throws ExecutionException, InterruptedException {
+        CollectionReference villagersCollection = firestore.collection("villagers");
+
+        ApiFuture<QuerySnapshot> query = villagersCollection
+                .whereEqualTo("address.division", "North")
+                .get();
+
+        QuerySnapshot querySnapshot = query.get();
+
+        return querySnapshot.size();
+    }
 }
