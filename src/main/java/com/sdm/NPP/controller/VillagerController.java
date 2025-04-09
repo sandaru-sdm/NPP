@@ -94,4 +94,14 @@ public class VillagerController {
         }
     }
 
+    @GetMapping("/south")
+    public ResponseEntity<Integer> getSouthDivisionVillagersCount() {
+        try {
+            int count = villagerService.getSouthDivisionVillagersCount();
+            return ResponseEntity.ok(count);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(null);
+        }
+    }
+
 }

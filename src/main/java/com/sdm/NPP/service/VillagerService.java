@@ -107,4 +107,16 @@ public class VillagerService {
 
         return querySnapshot.size();
     }
+
+    public int getSouthDivisionVillagersCount() throws ExecutionException, InterruptedException {
+        CollectionReference villagersCollection = firestore.collection("villagers");
+
+        ApiFuture<QuerySnapshot> query = villagersCollection
+                .whereEqualTo("address.division", "South")
+                .get();
+
+        QuerySnapshot querySnapshot = query.get();
+
+        return querySnapshot.size();
+    }
 }
