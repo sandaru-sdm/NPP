@@ -108,6 +108,18 @@ public class VillagerService {
         return querySnapshot.size();
     }
 
+    public int getEastDivisionVillagersCount() throws ExecutionException, InterruptedException {
+        CollectionReference villagersCollection = firestore.collection("villagers");
+
+        ApiFuture<QuerySnapshot> query = villagersCollection
+                .whereEqualTo("address.division", "East")
+                .get();
+
+        QuerySnapshot querySnapshot = query.get();
+
+        return querySnapshot.size();
+    }
+
     public int getSouthDivisionVillagersCount() throws ExecutionException, InterruptedException {
         CollectionReference villagersCollection = firestore.collection("villagers");
 
@@ -120,15 +132,16 @@ public class VillagerService {
         return querySnapshot.size();
     }
 
-    public int getEastDivisionVillagersCount() throws ExecutionException, InterruptedException {
+    public int getWestDivisionVillagersCount() throws ExecutionException, InterruptedException {
         CollectionReference villagersCollection = firestore.collection("villagers");
 
         ApiFuture<QuerySnapshot> query = villagersCollection
-                .whereEqualTo("address.division", "East")
+                .whereEqualTo("address.division", "West")
                 .get();
 
         QuerySnapshot querySnapshot = query.get();
 
         return querySnapshot.size();
     }
+
 }
